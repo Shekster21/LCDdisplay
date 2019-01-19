@@ -1,0 +1,116 @@
+C51 COMPILER V9.59.0.0   MYNAME                                                            01/19/2019 14:32:40 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MYNAME
+OBJECT MODULE PLACED IN .\Objects\myname.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE myname.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\my
+                    -name.lst) TABS(2) OBJECT(.\Objects\myname.obj)
+
+line level    source
+
+   1          // To display the string "Abhishek P" on a 16X2 LCD display connected to a 
+   2          //AT89C51 microcontroller with 12MHz clock.
+   3          // The bits D7-D0 are connected to port 2 bits P2.7 - P2.0.
+   4          // RS -> P3.0
+   5          // E -> P3.2
+   6          // R/W -> P3.1
+   7          #include<reg51.h>
+   8          
+   9          void lcdInit(void);
+  10          void writeCommand(unsigned char );
+  11          void writeData(unsigned char );
+  12          void msdelay(unsigned char );
+  13          void lcdReady(void);
+  14          
+  15          
+  16          
+  17          sbit rs = P3^0;
+  18          sbit e = P3^2;
+  19          sbit rw = P3^1;
+  20          sbit ready = P2^7;
+  21          
+  22          void main(void){
+  23   1        unsigned char myname[] = "Abhishek P";
+  24   1        unsigned char count;
+  25   1        lcdInit();
+  26   1        for(count = 0;count<10;count++){
+  27   2          writeData(myname[count]);
+  28   2        }
+  29   1        while(1);
+  30   1      }
+  31          void lcdInit(void){
+  32   1          writeCommand(0x38);
+  33   1          writeCommand(0x0E);
+  34   1          writeCommand(0x01);
+  35   1          writeCommand(0x80);
+  36   1          return;
+  37   1      }
+  38          void writeCommand(unsigned char command){
+  39   1          // sends the command to the command register of the lcd.
+  40   1          lcdReady(); // check is LCD is ready to receive command
+  41   1          P2 = command; // output command on port 2
+  42   1          rs = 0; // rs = 0 selects command register in the LCD
+  43   1          rw = 0; // rw = 0 writes data into the LCD
+  44   1          e = 1;  // high pulse on E
+  45   1          msdelay(1); // delay
+  46   1          e = 0; // H-to-L transition.
+  47   1          return;
+  48   1      }
+  49          
+  50          void writeData(unsigned char databyte){
+  51   1          // writes data into the dataregister of lcd display.
+  52   1          lcdReady();
+  53   1          P2 = databyte;// output data on port 2
+  54   1          rs = 1; // rs = 1 selects data register in the LCD
+C51 COMPILER V9.59.0.0   MYNAME                                                            01/19/2019 14:32:40 PAGE 2   
+
+  55   1          rw = 0; // rw = 0 writes data into lcd
+  56   1          e = 1; // high pulse on E
+  57   1          msdelay(1); // delay
+  58   1          e = 0; // H-to-L transition
+  59   1          return;
+  60   1      }
+  61          
+  62          void msdelay(unsigned char delay){
+  63   1          // max value of delay = 200ms. 
+  64   1          unsigned int mcount = 4 * delay; // initailize max count
+  65   1          unsigned int count;
+  66   1          TMOD = 0x02; // timer 0 in mode 2
+  67   1          TH0 = 0x06; // autoreload value to produce 0.25ms delay
+  68   1          TR0 = 1; // start counter
+  69   1          for(count = 0;count<mcount;count++){
+  70   2              while(TF0 == 0);
+  71   2              TF0 = 1; // clear overflow flag
+  72   2          }
+  73   1          TR0 = 0; //stop timer
+  74   1          return;
+  75   1      }
+  76          
+  77          void lcdReady(void){
+  78   1          // checks if LCD is ready to receive data/commands
+  79   1          P2 = 0xFF; // initialises port2 as input port
+  80   1          rs = 0; // command register select
+  81   1          rw = 1; // read command register
+  82   1          while(ready == 1)     // loop while LCD is busy
+  83   1          {
+  84   2            e = 0;
+  85   2            msdelay(2);
+  86   2            e = 1;
+  87   2          
+  88   2          }
+  89   1          return;
+  90   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    173    ----
+   CONSTANT SIZE    =     11    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      14
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
