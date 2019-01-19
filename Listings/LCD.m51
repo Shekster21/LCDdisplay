@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    01/19/2019  14:54:05  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    01/19/2019  15:26:32  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -22,21 +22,21 @@ LINK MAP OF MODULE:  .\Objects\LCD (MYNAME)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     000DH     UNIT         _DATA_GROUP_
-            IDATA   0015H     0001H     UNIT         ?STACK
+            DATA    0008H     000EH     UNIT         _DATA_GROUP_
+            IDATA   0016H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
                     0003H     07FDH                  *** GAP ***
             CODE    0800H     00F6H     UNIT         ?C?LIB_CODE
-            CODE    08F6H     0034H     UNIT         ?PR?MAIN?MYNAME
-            CODE    092AH     002FH     UNIT         ?PR?_MSDELAY?MYNAME
-            CODE    0959H     0018H     UNIT         ?PR?LCDREADY?MYNAME
-            CODE    0971H     0014H     UNIT         ?PR?LCDINIT?MYNAME
-            CODE    0985H     0010H     UNIT         ?PR?_WRITECOMMAND?MYNAME
-            CODE    0995H     0010H     UNIT         ?PR?_WRITEDATA?MYNAME
-            CODE    09A5H     000CH     UNIT         ?C_C51STARTUP
-            CODE    09B1H     000BH     UNIT         ?CO?MYNAME
+            CODE    08F6H     004DH     UNIT         ?PR?MAIN?MYNAME
+            CODE    0943H     002FH     UNIT         ?PR?_MSDELAY?MYNAME
+            CODE    0972H     0018H     UNIT         ?PR?LCDREADY?MYNAME
+            CODE    098AH     0010H     UNIT         ?PR?_WRITECOMMAND?MYNAME
+            CODE    099AH     0010H     UNIT         ?PR?_WRITEDATA?MYNAME
+            CODE    09AAH     000FH     UNIT         ?PR?LCDINIT?MYNAME
+            CODE    09B9H     000CH     UNIT         ?C_C51STARTUP
+            CODE    09C5H     000BH     UNIT         ?CO?MYNAME
 
 
 
@@ -49,25 +49,26 @@ SEGMENT                            DATA_GROUP
 ?C_C51STARTUP                    -----    -----
   +--> ?PR?MAIN?MYNAME
 
-?PR?MAIN?MYNAME                  0008H    000CH
+?PR?MAIN?MYNAME                  0008H    000DH
   +--> ?CO?MYNAME
   +--> ?PR?LCDINIT?MYNAME
+  +--> ?PR?_WRITECOMMAND?MYNAME
   +--> ?PR?_WRITEDATA?MYNAME
 
 ?PR?LCDINIT?MYNAME               -----    -----
   +--> ?PR?_WRITECOMMAND?MYNAME
 
-?PR?_WRITECOMMAND?MYNAME         0014H    0001H
+?PR?_WRITECOMMAND?MYNAME         0015H    0001H
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/19/2019  15:26:32  PAGE 2
+
+
   +--> ?PR?LCDREADY?MYNAME
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/19/2019  14:54:05  PAGE 2
-
-
   +--> ?PR?_MSDELAY?MYNAME
 
 ?PR?LCDREADY?MYNAME              -----    -----
   +--> ?PR?_MSDELAY?MYNAME
 
-?PR?_WRITEDATA?MYNAME            0014H    0001H
+?PR?_WRITEDATA?MYNAME            0015H    0001H
   +--> ?PR?LCDREADY?MYNAME
   +--> ?PR?_MSDELAY?MYNAME
 
@@ -84,112 +85,117 @@ SYMBOL TABLE OF MODULE:  .\Objects\LCD (MYNAME)
   D:00B0H         PUBLIC        P3
   B:00A0H.7       PUBLIC        ready
   C:08F6H         PUBLIC        main
-  C:0995H         PUBLIC        _writeData
-  C:0959H         PUBLIC        lcdReady
+  C:099AH         PUBLIC        _writeData
+  C:0972H         PUBLIC        lcdReady
   D:0089H         PUBLIC        TMOD
-  C:09B1H         SYMBOL        _?ix1000
+  C:09C5H         SYMBOL        _?ix1000
   B:0088H.5       PUBLIC        TF0
-  C:0971H         PUBLIC        lcdInit
+  C:09AAH         PUBLIC        lcdInit
   D:008CH         PUBLIC        TH0
   B:0088H.4       PUBLIC        TR0
   B:00B0H.2       PUBLIC        e
   B:00B0H.0       PUBLIC        rs
   B:00B0H.1       PUBLIC        rw
-  C:0985H         PUBLIC        _writeCommand
-  C:0930H         PUBLIC        _msdelay
+  C:098AH         PUBLIC        _writeCommand
+  C:0949H         PUBLIC        _msdelay
   -------         PROC          MAIN
   -------         DO            
   D:0008H         SYMBOL        myname
   D:0013H         SYMBOL        count
+  D:0014H         SYMBOL        addcount
+  D:0007H         SYMBOL        address
   -------         ENDDO         
   C:08F6H         LINE#         22
   C:08F6H         LINE#         23
   C:0909H         LINE#         25
   C:090CH         LINE#         26
-  C:091AH         LINE#         27
-  C:0924H         LINE#         28
-  C:0928H         LINE#         29
+  C:090CH         LINE#         27
+  C:091AH         LINE#         28
+  C:0920H         LINE#         29
+  C:0923H         LINE#         30
+  C:0931H         LINE#         31
+  C:093BH         LINE#         32
+  C:093FH         LINE#         33
   -------         ENDPROC       MAIN
   -------         PROC          LCDINIT
-  C:0971H         LINE#         31
-  C:0971H         LINE#         32
-  C:0976H         LINE#         33
-  C:097BH         LINE#         34
-  C:0980H         LINE#         35
+  C:09AAH         LINE#         36
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/19/2019  15:26:32  PAGE 3
+
+
+  C:09AAH         LINE#         37
+  C:09AFH         LINE#         38
+  C:09B4H         LINE#         39
   -------         ENDPROC       LCDINIT
   -------         PROC          _WRITECOMMAND
-  D:0014H         SYMBOL        command
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/19/2019  14:54:05  PAGE 3
-
-
-  C:0985H         LINE#         38
-  C:0987H         LINE#         40
-  C:098AH         LINE#         41
-  C:098DH         LINE#         42
-  C:098FH         LINE#         43
-  C:098FH         LINE#         44
-  C:098FH         LINE#         45
-  C:0992H         LINE#         46
+  D:0015H         SYMBOL        command
+  C:098AH         LINE#         43
+  C:098CH         LINE#         45
+  C:098FH         LINE#         46
+  C:0992H         LINE#         47
   C:0994H         LINE#         48
+  C:0994H         LINE#         49
+  C:0994H         LINE#         50
+  C:0997H         LINE#         51
+  C:0999H         LINE#         53
   -------         ENDPROC       _WRITECOMMAND
   -------         PROC          _WRITEDATA
-  D:0014H         SYMBOL        databyte
-  C:0995H         LINE#         50
-  C:0997H         LINE#         52
-  C:099AH         LINE#         53
-  C:099DH         LINE#         54
-  C:099FH         LINE#         55
-  C:099FH         LINE#         56
-  C:099FH         LINE#         57
-  C:09A2H         LINE#         58
+  D:0015H         SYMBOL        databyte
+  C:099AH         LINE#         55
+  C:099CH         LINE#         57
+  C:099FH         LINE#         58
+  C:09A2H         LINE#         59
   C:09A4H         LINE#         60
+  C:09A4H         LINE#         61
+  C:09A4H         LINE#         62
+  C:09A7H         LINE#         63
+  C:09A9H         LINE#         65
   -------         ENDPROC       _WRITEDATA
-  -------         PROC          L?0020
-  -------         ENDPROC       L?0020
+  -------         PROC          L?0023
+  -------         ENDPROC       L?0023
   -------         PROC          _MSDELAY
   D:0007H         SYMBOL        delay
   -------         DO            
   D:0006H         SYMBOL        mcount
   D:0004H         SYMBOL        count
   -------         ENDDO         
-  C:0930H         LINE#         62
-  C:0930H         LINE#         64
-  C:0938H         LINE#         66
-  C:093BH         LINE#         67
-  C:093EH         LINE#         68
-  C:0940H         LINE#         69
-  C:094AH         LINE#         70
-  C:094DH         LINE#         71
-  C:094FH         LINE#         72
-  C:0956H         LINE#         73
-  C:0958H         LINE#         75
+  C:0949H         LINE#         67
+  C:0949H         LINE#         69
+  C:0951H         LINE#         71
+  C:0954H         LINE#         72
+  C:0957H         LINE#         73
+  C:0959H         LINE#         74
+  C:0963H         LINE#         75
+  C:0966H         LINE#         76
+  C:0968H         LINE#         77
+  C:096FH         LINE#         78
+  C:0971H         LINE#         80
   -------         ENDPROC       _MSDELAY
   -------         PROC          LCDREADY
-  C:0959H         LINE#         77
-  C:0959H         LINE#         79
-  C:095CH         LINE#         80
-  C:095EH         LINE#         81
-  C:0960H         LINE#         82
-  C:0963H         LINE#         83
-  C:0963H         LINE#         84
-  C:0965H         LINE#         85
-  C:096AH         LINE#         86
-  C:096CH         LINE#         88
-  C:096EH         LINE#         89
-  C:0970H         LINE#         91
+  C:0972H         LINE#         82
+  C:0972H         LINE#         84
+  C:0975H         LINE#         85
+  C:0977H         LINE#         86
+  C:0979H         LINE#         87
+  C:097CH         LINE#         88
+  C:097CH         LINE#         89
+  C:097EH         LINE#         90
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/19/2019  15:26:32  PAGE 4
+
+
+  C:0983H         LINE#         91
+  C:0985H         LINE#         93
+  C:0987H         LINE#         94
+  C:0989H         LINE#         96
   -------         ENDPROC       LCDREADY
   -------         ENDMOD        MYNAME
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/19/2019  14:54:05  PAGE 4
-
-
 
   -------         MODULE        ?C?COPY
   C:08D0H         PUBLIC        ?C?COPY
   -------         ENDMOD        ?C?COPY
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00BAH BYTE ( 9%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00CEH BYTE (10%) *
 ******************************************************************************
 
-Program Size: data=22.0 xdata=0 code=447
+Program Size: data=23.0 xdata=0 code=467
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
