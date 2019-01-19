@@ -21,18 +21,38 @@ sbit ready = P2^7;
 
 void main(void){
 	unsigned char myname[] = "Abhishek P";
-	unsigned char count;
+	unsigned char count,addcount,address,tempcnt;
   lcdInit();
-	for(count = 0;count<10;count++){
-		writeData(myname[count]);
+	while(1){
+	for(addcount=0x00;addcount<0x1B;addcount++){
+		if (addcount > 0x0f){
+			address = 0x80;
+			writeCommand(address);
+			for(count = 0;count<=10;count++){
+				tempcnt = count+(addcount-0x0f);
+				if(tempcnt < 0x0A){
+					writeData(myname[tempcnt]);
+				}else{
+					writeData(0x00);
+				}
+			msdelay(100);
+		}
+		}else{
+			address = 0x8F - addcount;
+			writeCommand(address);
+		for(count = 0;count<=10;count++){
+				writeData(myname[count]);
+				msdelay(100);
+		}
 	}
-	while(1);
+	}
+}
 }
 void lcdInit(void){
     writeCommand(0x38);
-		writeCommand(0x0E);
+		writeCommand(0x0c);
 		writeCommand(0x01);
-		writeCommand(0x80);
+		//writeCommand(0x8F);
 	  return;
 }
 void writeCommand(unsigned char command){
@@ -86,5 +106,6 @@ void lcdReady(void){
 			e = 1;
 		
 		}
+		rw = 0;
 		return;
 }
