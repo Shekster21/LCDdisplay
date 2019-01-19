@@ -32,7 +32,7 @@ void lcdInit(void){
     writeCommand(0x38);
 		writeCommand(0x0E);
 		writeCommand(0x01);
-		writeCommand(0x80);
+		writeCommand(0x8a);
 	  return;
 }
 void writeCommand(unsigned char command){
@@ -86,5 +86,6 @@ void lcdReady(void){
 			e = 1;
 		
 		}
+		rw = 0;
 		return;
 }
